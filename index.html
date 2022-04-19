@@ -29,11 +29,30 @@
 			
 			#col_title,
 			#col_date,
+			#col_run,
+			#col_time,
+			#col_tix,
 			#col_url	{display:inline-block; vertical-align:top;}
-			#col_date,
-			#col_url	{padding-left:1em;}
-			.header		{font-weight:bold;}
-			.title		{font-size:14px;}
+			.header,
+			.title,
+			.run,
+			.date,
+			.time,
+			.tix,
+			.url		{padding:0.5em 0 0.5em 3em; border-bottom:1px solid #fff; line-height:24px; min-height:40px; height:40px; max-height:40px;}
+			.title		{font-size:14px; padding-left:0;}
+			.header	,
+			.tix		{font-weight:bold;}
+			.tix,
+			.url		{font-size:10px;}
+			#col_title .header	{padding-left:0;}
+			
+			a.url_tix,
+			a.url_abt	{display:block; padding:0px 10px; text-align:center; color:#fff; border-radius:4px;}
+			a.url_tix			{background-color:#056b9c;}
+			a.url_tix:hover		{background-color:#499fc9;}
+			a.url_abt			{background-color:#747474;}
+			a.url_abt:hover		{background-color:#969696;}
 			
 			.foot_wrap	{font-size:14px;}
 			.foot_cont	{box-sizing:border-box; display:inline-block; padding-right:1em; width:100%; vertical-align:top;}
@@ -69,8 +88,17 @@
 				<div id="col_title">
 					<div class="header">Title</div>
 				</div>
+				<div id="col_run">
+					<div class="header">Length</div>
+				</div>
 				<div id="col_date">
 					<div class="header">Date</div>
+				</div>
+				<div id="col_time">
+					<div class="header">Time</div>
+				</div>
+				<div id="col_tix">
+					<div class="header">Tickets</div>
 				</div>
 				<div id="col_url">
 					<div class="header">URL</div>
@@ -96,27 +124,48 @@
 		{
 			var dat=window.__gfminiguidedata;
 			  
-			//      console.log(dat)
-			//  document.getElementById("dump").innerHTML="<pre>"+JSON.stringify(dat)+"</pre>"
+			//	console.log(dat)
+			//	document.getElementById("dump").innerHTML="<pre>"+JSON.stringify(dat)+"</pre>"
 
 			for (let it of dat.Schedule)
 			{
-			  let l = document.getElementById("col_title")
-			  l.innerHTML+="<div class='title'>"+it.Title+"</div>"
-			  
-			  let u = document.getElementById("col_url")
-			  u.innerHTML+="<div class='url'><a href='https://bradford.lightcinemas.co.uk/"+it.Url+"'>Get Tickets</a></div>"
-			}
-
-			for (let Dates in dat.Schedule)
-			{
-
-				for (let it of dat.Schedule[Dates])
+				console.log(it.Title)
+				for (let d of it.Dates)
 				{
-					let l = document.getElementsByClassName("title")
-					l.innerHTML+="<div class='date'>"+it.Display+"</div>"
+					console.log(d)
+					for (let f of d.Formats)
+					{
+					
+						//console.log(f)
+						for (let s of f.Sessions)
+						{
+						
+							console.log(s)
+							
+							let title = document.getElementById("col_title")
+							title.innerHTML+="<div class='title'>"+it.Title+"</div>"
+
+							let run = document.getElementById("col_run")
+							run.innerHTML+="<div class='run'>"+it.Runtime+"</div>"
+
+							let date = document.getElementById("col_date")
+							date.innerHTML+="<div class='date'>"+d.Display+"</div>"
+							
+							let time = document.getElementById("col_time")
+							time.innerHTML+="<div class='time'>"+s.Display+"</div>"
+
+							let tix = document.getElementById("col_tix")
+							tix.innerHTML+="<div class='tix'><a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a></div>"
+							
+							let url = document.getElementById("col_url")
+							url.innerHTML+="<div class='url'><a class='url_abt' href='https://bradford.lightcinemas.co.uk/"+it.Url+"' target='_blank'>ABOUT</a></div>"
+						
+						}
+					}
 				}
 			}
+
+			
 
 		}
 		</script>
