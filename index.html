@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html id="top" lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<meta name="theme-color" content="#142334">
+		<title>_ d _ u _ m _ p _ </title>
+		<!-- Copyright (c) 2022-present, shi Blank
+			 Licensed under the MIT license whose full text can be found at http://opensource.org/licenses/MIT -->
+		<style>
+			/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}img,embed,iframe,object,audio,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0;text-align:left}
+			
+			html		{scroll-behavior:smooth;}
+			body, html	{-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; font-weight:normal; font-style:normal;}
+			body		{background:#f2f2f2; font-family:sans-serif; font-size:1rem; line-height:1.5; color:#444;}
+			body		{display:grid; height:100vh; grid-template-rows:auto 1fr auto;}
+			h1			{font-size:4em; font-weight:normal; color:#1400ff;}
+			h2			{font-size:2em; font-weight:normal;}
+			h3			{font-size:1.3em; font-weight:bold;}
+			a			{text-decoration:none;}
+			p			{margin:0.5em 0;}
+			img			{max-width:100%; height:auto;}
+			.wrap		{background:#fff;}
+			.head_wrap	{padding:2em 0; margin:0 auto;}
+			.info_wrap	{padding:2em 0 0 7px;}
+			.foot_wrap,
+			.table_wrap	{max-width:1280px; width:960px; padding:2em 4em; margin:0 auto;}
+			.table_wrap	{font-size:12px; line-height:1.5em;}
+			
+			#col_title,
+			#col_date,
+			#col_url	{display:inline-block; vertical-align:top;}
+			#col_date,
+			#col_url	{padding-left:1em;}
+			.header		{font-weight:bold;}
+			.title		{font-size:14px;}
+			
+			.foot_wrap	{font-size:14px;}
+			.foot_cont	{box-sizing:border-box; display:inline-block; padding-right:1em; width:100%; vertical-align:top;}
+			.foot_small	{font-size:12px;}
+			.foot_bold	{font-weight:bold;}
+			.foot_bold p{margin:1.5em 0;}
+			span#date	{font-style:italic;}
+			
+			/*	Back to top link	*/
+			a.top		{display:block; width:100%; padding:20px 0; text-align:center; font-size:12px; color:#444; cursor:pointer;}
+			a.top:hover	{background-color:#F8F8F8;}
+			
+			/*	PHONES & STUFF
+				============================================= */
+				
+			@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+			only screen and (-o-min-device-pixel-ratio: 3/2),
+			only screen and (min--moz-device-pixel-ratio: 1.5),
+			only screen and (min-device-pixel-ratio: 1.5) {
+
+			.head_wrap	{padding:1em; margin:0 auto; line-height:2em;}
+			.foot_wrap	{padding:2em; font-size:12px;}
+			.table_wrap	{padding:1vh; max-width:initial;}
+			span#date	{display:block; padding-top:1em;}
+
+			}
+		</style>
+	</head>
+	<body>
+		<div class="table_wrap">
+			<div class="head_wrap"><h2>Movies</h2></div>
+			<div class="col_wrap">
+				<div id="col_title">
+					<div class="header">Title</div>
+				</div>
+				<div id="col_date">
+					<div class="header">Date</div>
+				</div>
+				<div id="col_url">
+					<div class="header">URL</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap">
+			<div class="foot_wrap">
+				<div class="foot_cont">
+					<div class="foot_bold"><p>About</p></div>
+					<div class="foot_text">
+						A live movie dump from The Light Cinema in Bradford.
+					</div>
+					<div class="foot_bold"><p><a href="http://github.com/notshi/dump">dump is on Github</a></p></div>
+					<div class="foot_small">Project by Wetgenes, 2022-present</div>
+				</div>
+			</div>
+			<a href="#top" class="top">BACK TOP</a>
+		</div>
+	</body>
+		<script>
+		window.gfdx = function(a)
+		{
+			var dat=window.__gfminiguidedata;
+			  
+			//      console.log(dat)
+			//  document.getElementById("dump").innerHTML="<pre>"+JSON.stringify(dat)+"</pre>"
+
+			for (let it of dat.Schedule)
+			{
+			  let l = document.getElementById("col_title")
+			  l.innerHTML+="<div class='title'>"+it.Title+"</div>"
+			  
+			  let u = document.getElementById("col_url")
+			  u.innerHTML+="<div class='url'><a href='https://bradford.lightcinemas.co.uk/"+it.Url+"'>Get Tickets</a></div>"
+			}
+
+			for (let Dates in dat.Schedule)
+			{
+
+				for (let it of dat.Schedule[Dates])
+				{
+					let l = document.getElementsByClassName("title")
+					l.innerHTML+="<div class='date'>"+it.Display+"</div>"
+				}
+			}
+
+		}
+		</script>
+		<script src="https://bradford.lightcinemas.co.uk/resource/services/miniguide/data.ashx" ></script>
+</html>
