@@ -33,23 +33,10 @@
 			#col_time,
 			#col_tix,
 			#col_url	{display:inline-block; vertical-align:top;}
-			.header,
-			.title,
-			.run,
-			.date,
-			.time,
-			.tix,
-			.url		{padding:0.5em 0 0.5em 3em; border-bottom:1px solid #fff; line-height:24px; min-height:40px; height:40px; max-height:40px;}
-			.title		{font-size:14px; padding-left:0;}
-			.header	,
-			.tix		{font-weight:bold;}
-			.tix,
-			.url		{font-size:10px;}
-			#col_title .header	{padding-left:0;}
 			
 			a.url_tix,
-			a.url_abt	{display:block; padding:0px 10px; text-align:center; color:#fff; border-radius:4px;}
-			a.url_tix			{background-color:#056b9c;}
+			a.url_abt	{display:block; padding:3px 10px; font-size:12px; text-align:center; color:#fff; border-radius:4px;}
+			a.url_tix			{background-color:#056b9c; font-weight:bold;}
 			a.url_tix:hover		{background-color:#499fc9;}
 			a.url_abt			{background-color:#747474;}
 			a.url_abt:hover		{background-color:#969696;}
@@ -64,6 +51,32 @@
 			/*	Back to top link	*/
 			a.top		{display:block; width:100%; padding:20px 0; text-align:center; font-size:12px; color:#444; cursor:pointer;}
 			a.top:hover	{background-color:#F8F8F8;}
+			
+			/*	tablesort style	*/
+			table		{background:#fff; max-width:100%; border-spacing:0; width:100%; margin:10px 0; border:1px solid #ddd; border-collapse:separate;
+			*border-collapse:collapsed; -webkit-box-shadow:0 0 4px rgba(0,0,0,0.10); -moz-box-shadow:0 0 4px rgba(0,0,0,0.10); box-shadow:0 0 4px rgba(0,0,0,0.10);}
+			table th,
+			table td	{padding:6px; line-height:18px; text-align:left; border-top:1px solid #ddd;}
+			table th	{background:#eee; background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#eee)); background:-moz-linear-gradient(top, #f6f6f6, #eee); text-shadow:0 1px 0 #fff; font-weight:bold; vertical-align:bottom;}
+			table td	{vertical-align:middle;}
+			table thead:first-child tr th,
+			table thead:first-child tr td {border-top:0;}
+			table tbody + tbody {border-top:2px solid #ddd;}
+			table th + th,
+			table td + td,
+			table th + td,
+			table td + th	{border-left:1px solid #ddd;}
+			table thead:first-child tr:first-child th,
+			table tbody:first-child tr:first-child th,
+			table tbody:first-child tr:first-child td {border-top:0;}
+			table td:first-child	{font-size:14px;}
+
+			th[role=columnheader]:not(.no-sort) {cursor:pointer;}
+			th[role=columnheader]:not(.no-sort):after	{content:''; float:right; margin-top:7px; border-width:0 4px 4px; border-style:solid; border-color:#404040 transparent; visibility:hidden; opacity:0; -ms-user-select:none; -webkit-user-select:none; -moz-user-select:none; user-select:none;}
+			th[aria-sort=ascending]:not(.no-sort):after	{border-bottom:none; border-width:4px 4px 0;}
+			th[aria-sort]:not(.no-sort):after	{visibility:visible; opacity:0.4;}
+			th[role=columnheader]:not(.no-sort):hover:after	{visibility:visible; opacity:1;}
+
 			
 			/*	PHONES & STUFF
 				============================================= */
@@ -83,27 +96,21 @@
 	</head>
 	<body>
 		<div class="table_wrap">
-			<div class="head_wrap"><h2>Movies</h2></div>
-			<div class="col_wrap">
-				<div id="col_title">
-					<div class="header">Title</div>
-				</div>
-				<div id="col_run">
-					<div class="header">Length</div>
-				</div>
-				<div id="col_date">
-					<div class="header">Date</div>
-				</div>
-				<div id="col_time">
-					<div class="header">Time</div>
-				</div>
-				<div id="col_tix">
-					<div class="header">Tickets</div>
-				</div>
-				<div id="col_url">
-					<div class="header">URL</div>
-				</div>
-			</div>
+			<div class="head_wrap"><h2>Movie dump @ The Light Cinema</h2></div>
+			<table id="table">
+				<thead>
+				<tr>
+					<th>Title</th>
+					<th>Length</th>
+					<th>Date</th>
+					<th>Time</th>
+					<th data-sort-method='none' class="no-sort">Tickets</th>
+					<th data-sort-method='none' class="no-sort">About</th>
+				</tr>
+				</thead>
+				<tbody id="dump">
+				</tbody>
+			</table>
 		</div>
 		<div class="wrap">
 			<div class="foot_wrap">
@@ -123,51 +130,59 @@
 		window.gfdx = function(a)
 		{
 			var dat=window.__gfminiguidedata;
-			  
 			//	console.log(dat)
 			//	document.getElementById("dump").innerHTML="<pre>"+JSON.stringify(dat)+"</pre>"
+			
+			const table = document.getElementById("dump");			
 
 			for (let it of dat.Schedule)
 			{
-				console.log(it.Title)
+				//console.log(it.Title)
 				for (let d of it.Dates)
 				{
-					console.log(d)
+					//console.log(d)
 					for (let f of d.Formats)
 					{
-					
 						//console.log(f)
 						for (let s of f.Sessions)
 						{
-						
-							console.log(s)
+							//console.log(s)
 							
-							let title = document.getElementById("col_title")
-							title.innerHTML+="<div class='title'>"+it.Title+"</div>"
-
-							let run = document.getElementById("col_run")
-							run.innerHTML+="<div class='run'>"+it.Runtime+"</div>"
-
-							let date = document.getElementById("col_date")
-							date.innerHTML+="<div class='date'>"+d.Display+"</div>"
+							const tr = document.createElement("tr");
+							table.appendChild(tr);
 							
-							let time = document.getElementById("col_time")
-							time.innerHTML+="<div class='time'>"+s.Display+"</div>"
-
-							let tix = document.getElementById("col_tix")
-							tix.innerHTML+="<div class='tix'><a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a></div>"
+							const title = document.createElement("td");
+							title.innerHTML+=it.Title
+							tr.appendChild(title);
 							
-							let url = document.getElementById("col_url")
-							url.innerHTML+="<div class='url'><a class='url_abt' href='https://bradford.lightcinemas.co.uk/"+it.Url+"' target='_blank'>ABOUT</a></div>"
+							const run = document.createElement("td");
+							run.innerHTML+=it.Runtime
+							tr.appendChild(run);
+
+							const date = document.createElement("td");
+							date.innerHTML+=d.Display
+							tr.appendChild(date);
+							
+							const time = document.createElement("td");
+							time.innerHTML+=s.Display
+							tr.appendChild(time);
+							
+							const tix = document.createElement("td");
+							tix.innerHTML+="<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>"
+							tr.appendChild(tix);
+
+							const url = document.createElement("td");
+							url.innerHTML+="<a class='url_abt' href='https://bradford.lightcinemas.co.uk/"+it.Url+"' target='_blank'>ABOUT</a>"
+							tr.appendChild(url);
 						
 						}
 					}
 				}
 			}
 
-			
-
 		}
 		</script>
-		<script src="https://bradford.lightcinemas.co.uk/resource/services/miniguide/data.ashx" ></script>
+		<script src="https://bradford.lightcinemas.co.uk/resource/services/miniguide/data.ashx"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js" type="text/javascript"></script>
+		<script>new Tablesort(document.getElementById("table"));</script>
 </html>
