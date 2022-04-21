@@ -131,66 +131,102 @@
 			var dat=window.__gfminiguidedata;
 			//	console.log(dat)
 			//	document.getElementById("dump").innerHTML="<pre>"+JSON.stringify(dat)+"</pre>"
-			const table = document.getElementById("dump");			
+			const table = document.getElementById("dump");
+			
+			let movies = {};
+			let getmovie = function(name)
+			{
+				let movie = movies[name];
+				if (!movie)
+				{
+				    movie = {};
+				    movies[name] = movie;
+				}
+				return movie;
+			}
+			
 			for (let it of dat.Schedule)
 			{
-				//console.log(it.Title)
 				for (let d of it.Dates)
 				{
-					//console.log(d)
 					for (let f of d.Formats)
 					{
-						//console.log(f)
 						for (let s of f.Sessions)
 						{
-							//console.log(s)
+							let year      = parseInt(d.Key.slice(0,4));
+							let month     = parseInt(d.Key.slice(4,6));
+							let day       = parseInt(d.Key.slice(6,8));
+							let timesplit = s.Display.split(".");
+							let hour      = timesplit[0];
+							let minute    = timesplit[1];
+							hour          = parseInt(hour);
+							minute        = parseInt(minute);
+							
+							let newdate   = new Date(year, month-1, day, hour, minute);		//date and time grouped
+							let unix      = newdate.getTime();					// unix time stamp
+							let unixpad   = String(newdate.getTime()).padStart(16,"0");		// unix time stamp with front padding to keep same length
+							
+							//console.log(year, month, day, newdate, unix)
 							
 							const tr = document.createElement("tr");
 							table.appendChild(tr);
 							
 							const title = document.createElement("td");
 							title.className = 'title';
-							title.innerHTML+=it.Title
+							title.innerHTML+=it.Title;
 							tr.appendChild(title);
 							
 							const run = document.createElement("td");
 							run.className = 'run';
-							let aa = it.Runtime.split(" ");
-							aa[0] = parseInt(aa[0]);
-							aa[1] = parseInt(aa[1]);
-							let runtime = aa[0]*60 + aa[1];
-							let ab = document.createAttribute("data-sort");
-							ab.value = runtime.toString().padStart(4,"0");
-							run.setAttributeNode(ab);
-							run.innerHTML+=it.Runtime
+							let runlength = it.Runtime.split(" ");
+							let runhour = runlength[0];
+							let runminute = runlength[1];
+							runhour = parseInt(runhour);
+							runminute = parseInt(runminute);
+							let runtime = runhour*60 + runminute;
+							let runsort = document.createAttribute("data-sort");
+							runsort.value = runtime.toString().padStart(4,"0");
+							run.setAttributeNode(runsort);
+							run.innerHTML+=it.Runtime;
 							tr.appendChild(run);
 							
 							const date = document.createElement("td");
 							date.className = 'date';
-							let key = document.createAttribute("data-sort");
-							key.value = d.Key;
-							date.setAttributeNode(key);
-							date.innerHTML+=d.Display
+							let keysort = document.createAttribute("data-sort");
+							keysort.value = d.Key;
+							date.setAttributeNode(keysort);
+							date.innerHTML+=d.Display;
 							tr.appendChild(date);
 							
 							const time = document.createElement("td");
 							time.className = 'time';
-							time.innerHTML+=s.Display
+							time.innerHTML+=s.Display;
 							tr.appendChild(time);
 							
 							const tix = document.createElement("td");
 							tix.className = 'tix';
-							tix.innerHTML+="<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>"
+							tix.innerHTML+="<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>";
 							tr.appendChild(tix);
 							
 							const url = document.createElement("td");
 							url.className = 'url';
-							url.innerHTML+="<a class='url_abt' href='https://bradford.lightcinemas.co.uk/"+it.Url+"' target='_blank'>ABOUT</a>"
+							url.innerHTML+="<a class='url_abt' href='https://bradford.lightcinemas.co.uk/"+it.Url+"' target='_blank'>ABOUT</a>";
 							tr.appendChild(url);
+							
+							let movie    = getmovie(it.Title);
+							movie.title  = it.Title;
+							movie.length = runtime;
+							
+							if (!movie.first){movie.first=newdate;}
+							if (!movie.last){movie.last=newdate;}
+							if ( movie.first.getTime() > newdate.getTime() ){ movie.first=newdate }
+							if ( movie.last.getTime() < newdate.getTime() ){ movie.last=newdate }
 						}
 					}
 				}
 			}
+			
+			console.log(movies)
 		}
 	</script>
 	<script src="https://bradford.lightcinemas.co.uk/resource/services/miniguide/data.ashx"></script>
