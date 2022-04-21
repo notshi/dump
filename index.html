@@ -94,7 +94,7 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body><div id="test"></div>
 		<div class="table_wrap">
 			<div class="head_wrap"><h2>Movie dump @ The Light Cinema</h2></div>
 			<table id="table">
@@ -149,26 +149,42 @@
 							table.appendChild(tr);
 							
 							const title = document.createElement("td");
+							title.className = 'title';
 							title.innerHTML+=it.Title
 							tr.appendChild(title);
 							
 							const run = document.createElement("td");
+							run.className = 'run';
+							let aa = it.Runtime.split(" ");
+							aa[0] = parseInt(aa[0]);
+							aa[1] = parseInt(aa[1]);
+							let runtime = aa[0]*60 + aa[1];
+							let ab = document.createAttribute("data-sort");
+							ab.value = runtime.toString().padStart(4,"0");
+							run.setAttributeNode(ab);
 							run.innerHTML+=it.Runtime
 							tr.appendChild(run);
 							
 							const date = document.createElement("td");
+							date.className = 'date';
+							let key = document.createAttribute("data-sort");
+							key.value = d.Key;
+							date.setAttributeNode(key);
 							date.innerHTML+=d.Display
 							tr.appendChild(date);
 							
 							const time = document.createElement("td");
+							time.className = 'time';
 							time.innerHTML+=s.Display
 							tr.appendChild(time);
 							
 							const tix = document.createElement("td");
+							tix.className = 'tix';
 							tix.innerHTML+="<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>"
 							tr.appendChild(tix);
 							
 							const url = document.createElement("td");
+							url.className = 'url';
 							url.innerHTML+="<a class='url_abt' href='https://bradford.lightcinemas.co.uk/"+it.Url+"' target='_blank'>ABOUT</a>"
 							tr.appendChild(url);
 						}
