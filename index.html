@@ -94,18 +94,33 @@
 			}
 		</style>
 	</head>
-	<body><div id="test"></div>
+	<body>
 		<div class="table_wrap">
 			<div class="head_wrap"><h2>Movie dump @ The Light Cinema</h2></div>
-			<table id="table">
+			<table id="table_summary">
 				<thead>
 				<tr>
 					<th>Title</th>
-					<th>Length</th>
+					<th>Runtime</th>
+					<th>First</th>
+					<th>Last</th>
+					<th>Count</th>
+					<th data-sort-method='none' class="no-sort">About</th>
+				</tr>
+				</thead>
+				<tbody id="list"></tbody>
+			</table>
+		</div>
+		<div class="table_wrap">
+			<div class="head_wrap"><h2>All movies now showing</h2></div>
+			<table id="table_list">
+				<thead>
+				<tr>
+					<th>Title</th>
+					<th>Runtime</th>
 					<th>Date</th>
 					<th>Time</th>
 					<th data-sort-method='none' class="no-sort">Tickets</th>
-					<th data-sort-method='none' class="no-sort">About</th>
 				</tr>
 				</thead>
 				<tbody id="dump"></tbody>
@@ -131,7 +146,8 @@
 			var dat=window.__gfminiguidedata;
 			//	console.log(dat)
 			//	document.getElementById("dump").innerHTML="<pre>"+JSON.stringify(dat)+"</pre>"
-			const table = document.getElementById("dump");
+			const dump = document.getElementById("dump");
+			const list = document.getElementById("list");
 			
 			let movies = {};
 			let getmovie = function(name)
@@ -162,74 +178,126 @@
 							hour          = parseInt(hour);
 							minute        = parseInt(minute);
 							
-							let newdate   = new Date(year, month-1, day, hour, minute);		//date and time grouped
+							let newdate   = new Date(year, month-1, day, hour, minute);		// date and time grouped
 							let unix      = newdate.getTime();					// unix time stamp
 							let unixpad   = String(newdate.getTime()).padStart(16,"0");		// unix time stamp with front padding to keep same length
 							
 							//console.log(year, month, day, newdate, unix)
 							
-							const tr = document.createElement("tr");
-							table.appendChild(tr);
+							const tr      = document.createElement("tr");
+							const title   = document.createElement("td");
+							const run     = document.createElement("td");
+							const date    = document.createElement("td");
+							const time    = document.createElement("td");
+							const tix     = document.createElement("td");
 							
-							const title = document.createElement("td");
 							title.className = 'title';
-							title.innerHTML+=it.Title;
-							tr.appendChild(title);
+							run.className   = 'run';
+							date.className  = 'date';
+							time.className  = 'time';
+							tix.className   = 'tix';
 							
-							const run = document.createElement("td");
-							run.className = 'run';
-							let runlength = it.Runtime.split(" ");
-							let runhour = runlength[0];
-							let runminute = runlength[1];
-							runhour = parseInt(runhour);
-							runminute = parseInt(runminute);
-							let runtime = runhour*60 + runminute;
-							let runsort = document.createAttribute("data-sort");
-							runsort.value = runtime.toString().padStart(4,"0");
+							let runlength   = it.Runtime.split(" ");
+							let runhour     = runlength[0];
+							let runminute   = runlength[1];
+							runhour         = parseInt(runhour);
+							runminute       = parseInt(runminute);
+							let runtime     = runhour*60 + runminute;				// runtime converted to minutes
+							let runsort     = document.createAttribute("data-sort");
+							runsort.value   = String(runtime).padStart(4,"0");
+							let keysort     = document.createAttribute("data-sort");
+							keysort.value   = d.Key;
+							
 							run.setAttributeNode(runsort);
-							run.innerHTML+=it.Runtime;
-							tr.appendChild(run);
-							
-							const date = document.createElement("td");
-							date.className = 'date';
-							let keysort = document.createAttribute("data-sort");
-							keysort.value = d.Key;
 							date.setAttributeNode(keysort);
-							date.innerHTML+=d.Display;
+							
+							title.innerHTML+= it.Title;
+							run.innerHTML  += it.Runtime;
+							date.innerHTML += d.Display;
+							time.innerHTML += s.Display;
+							tix.innerHTML  += "<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>";
+							
+							dump.appendChild(tr);
+							tr.appendChild(title);
+							tr.appendChild(run);
 							tr.appendChild(date);
-							
-							const time = document.createElement("td");
-							time.className = 'time';
-							time.innerHTML+=s.Display;
 							tr.appendChild(time);
-							
-							const tix = document.createElement("td");
-							tix.className = 'tix';
-							tix.innerHTML+="<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>";
 							tr.appendChild(tix);
-							
-							const url = document.createElement("td");
-							url.className = 'url';
-							url.innerHTML+="<a class='url_abt' href='https://bradford.lightcinemas.co.uk/"+it.Url+"' target='_blank'>ABOUT</a>";
-							tr.appendChild(url);
 							
 							let movie    = getmovie(it.Title);
 							movie.title  = it.Title;
-							movie.length = runtime;
+							movie.run    = runtime;
+							movie.runraw = it.Runtime;
+							movie.url    = "<a class='url_abt' href='https://bradford.lightcinemas.co.uk"+it.Url+"' target='_blank'>ABOUT</a>";
 							
-							if (!movie.first){movie.first=newdate;}
-							if (!movie.last){movie.last=newdate;}
+							if ( !movie.first ){ movie.first=newdate }
+							if ( !movie.last  ){ movie.last =newdate }
 							if ( movie.first.getTime() > newdate.getTime() ){ movie.first=newdate }
-							if ( movie.last.getTime() < newdate.getTime() ){ movie.last=newdate }
+							if ( movie.last.getTime()  < newdate.getTime() ){ movie.last =newdate }
+							
+							movie.count  = movie.count || 0;
+							movie.count  ++
+							
 						}
 					}
 				}
 			}
 			
-			console.log(movies)
+			for (let name in movies)
+			{
+			    let movie = movies[name];
+			    
+			    const tr      = document.createElement("tr");
+			    const title   = document.createElement("td");
+			    const run     = document.createElement("td");
+			    const first   = document.createElement("td");
+			    const last    = document.createElement("td");
+			    const count   = document.createElement("td");
+			    const url     = document.createElement("td");
+			    
+			    let runsort      = document.createAttribute("data-sort");
+			    let countsort    = document.createAttribute("data-sort");
+			    runsort.value    = String(movie.run).padStart(4,"0");
+			    countsort.value  = String(movie.count).padStart(4,"0");
+			    
+			    let getdate = function(d)
+			    {
+				let aa  = String(d).split(" ");
+				let ab  = aa[4].split(":")
+				return aa[1]+' '+aa[2]+' ('+ab[0]+':'+ab[1]+') '+aa[0];
+			    }
+			    
+			    title.className  = 'title';
+			    run.className    = 'run';
+			    first.className  = 'first';
+			    last.className   = 'last';
+			    count.className  = 'count';
+			    url.className    = 'url';
+			    title.innerHTML += movie.title;
+			    run.innerHTML   += movie.runraw;
+			    first.innerHTML += getdate(movie.first);
+			    last.innerHTML  += getdate(movie.last);
+			    count.innerHTML += movie.count;
+			    url.innerHTML   += movie.url;
+			    
+			    run.setAttributeNode(runsort);
+			    count.setAttributeNode(countsort);
+			    
+			    list.appendChild(tr);
+			    tr.appendChild(title);
+			    tr.appendChild(run);
+			    tr.appendChild(first);
+			    tr.appendChild(last);
+			    tr.appendChild(count);
+			    tr.appendChild(url);
+			    
+			    
+			}
+			//console.log(movies)
 		}
 	</script>
 	<script src="https://bradford.lightcinemas.co.uk/resource/services/miniguide/data.ashx"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js" type="text/javascript"></script>
-	<script>new Tablesort(document.getElementById("table"));</script>
+	<script>new Tablesort(document.getElementById("table_list"));</script>
+	<script>new Tablesort(document.getElementById("table_summary"));</script>
 </html>
