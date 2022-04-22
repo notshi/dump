@@ -96,7 +96,7 @@
 	</head>
 	<body>
 		<div class="table_wrap">
-			<div class="head_wrap"><h2>Movie dump @ The Light Cinema</h2></div>
+			<div class="head_wrap"><h2>Movies</h2></div>
 			<table id="table_summary">
 				<thead>
 				<tr>
@@ -112,14 +112,13 @@
 			</table>
 		</div>
 		<div class="table_wrap">
-			<div class="head_wrap"><h2>All movies now showing</h2></div>
+			<div class="head_wrap"><h2>Showings</h2></div>
 			<table id="table_list">
 				<thead>
 				<tr>
 					<th>Title</th>
 					<th>Runtime</th>
-					<th>Date</th>
-					<th>Time</th>
+					<th>Timing</th>
 					<th data-sort-method='none' class="no-sort">Tickets</th>
 				</tr>
 				</thead>
@@ -190,38 +189,47 @@
 							const date    = document.createElement("td");
 							const time    = document.createElement("td");
 							const tix     = document.createElement("td");
+							const when    = document.createElement("td");
 							
 							title.className = 'title';
 							run.className   = 'run';
 							date.className  = 'date';
 							time.className  = 'time';
 							tix.className   = 'tix';
+							when.className  = 'when';
 							
 							let runlength   = it.Runtime.split(" ");
 							let runhour     = runlength[0];
 							let runminute   = runlength[1];
 							runhour         = parseInt(runhour);
 							runminute       = parseInt(runminute);
-							let runtime     = runhour*60 + runminute;				// runtime converted to minutes
+							let runtime     = runhour*60 + runminute;
+							let whendate    = d.Display.split(" ");				// runtime converted to minutes
 							let runsort     = document.createAttribute("data-sort");
-							runsort.value   = String(runtime).padStart(4,"0");
 							let keysort     = document.createAttribute("data-sort");
+							let whensort    = document.createAttribute("data-sort");
+							
+							runsort.value   = String(runtime).padStart(4,"0");
 							keysort.value   = d.Key;
+							whensort.value  = unixpad;
 							
 							run.setAttributeNode(runsort);
 							date.setAttributeNode(keysort);
+							when.setAttributeNode(whensort);
 							
 							title.innerHTML+= it.Title;
 							run.innerHTML  += it.Runtime;
 							date.innerHTML += d.Display;
 							time.innerHTML += s.Display;
 							tix.innerHTML  += "<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>";
+							when.innerHTML += whendate[2]+" "+whendate[1]+" ("+s.Display+") "+whendate[0];
 							
 							dump.appendChild(tr);
 							tr.appendChild(title);
 							tr.appendChild(run);
-							tr.appendChild(date);
-							tr.appendChild(time);
+							//tr.appendChild(date);
+							//tr.appendChild(time);
+							tr.appendChild(when);
 							tr.appendChild(tix);
 							
 							let movie    = getmovie(it.Title);
