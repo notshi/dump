@@ -70,6 +70,7 @@
 			table tbody:first-child tr:first-child th,
 			table tbody:first-child tr:first-child td	{border-top:0;}
 			table td:first-child				{font-size:14px;}
+			table tr.over					{background-color:#f1f1f1; color:#afaeae;}
 
 			th[role=columnheader]:not(.no-sort)		{cursor:pointer;}
 			th[role=columnheader]:not(.no-sort):after	{content:''; float:right; margin-top:7px; border-width:0 4px 4px; border-style:solid; border-color:#404040 transparent; visibility:hidden; opacity:0; -ms-user-select:none; -webkit-user-select:none; -moz-user-select:none; user-select:none;}
@@ -143,8 +144,6 @@
 		window.gfdx = function(a)
 		{
 			var dat=window.__gfminiguidedata;
-			//	console.log(dat)
-			//	document.getElementById("dump").innerHTML="<pre>"+JSON.stringify(dat)+"</pre>"
 			const dump = document.getElementById("dump");
 			const list = document.getElementById("list");
 			
@@ -181,8 +180,6 @@
 							let unix      = newdate.getTime();					// unix time stamp
 							let unixpad   = String(newdate.getTime()).padStart(16,"0");		// unix time stamp with front padding to keep same length
 							
-							//console.log(year, month, day, newdate, unix)
-							
 							const tr      = document.createElement("tr");
 							const title   = document.createElement("td");
 							const run     = document.createElement("td");
@@ -208,6 +205,8 @@
 							let runsort     = document.createAttribute("data-sort");
 							let keysort     = document.createAttribute("data-sort");
 							let whensort    = document.createAttribute("data-sort");
+							
+							if ( unix < ( new Date() ).getTime() ){ tr.className = 'over'; }
 							
 							runsort.value   = String(runtime).padStart(4,"0");
 							keysort.value   = d.Key;
@@ -299,9 +298,7 @@
 			    tr.appendChild(count);
 			    tr.appendChild(url);
 			    
-			    
 			}
-			//console.log(movies)
 		}
 	</script>
 	<script src="https://bradford.lightcinemas.co.uk/resource/services/miniguide/data.ashx"></script>
