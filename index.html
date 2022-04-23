@@ -27,6 +27,8 @@
 			.table_wrap	{max-width:1280px; width:960px; padding:2em 4em; margin:0 auto;}
 			.table_wrap	{font-size:12px; line-height:1.5em;}
 			
+			#test		{font-family:monospace; font-size:1px; overflow:wrap; margin:0 auto;}
+			
 			#col_title,
 			#col_date,
 			#col_run,
@@ -52,7 +54,13 @@
 			a.top		{display:block; width:100%; padding:20px 0; text-align:center; font-size:12px; color:#444; cursor:pointer;}
 			a.top:hover	{background-color:#F8F8F8;}
 			
-			/*	tablesort style	*/
+			/*	Extra style	*/
+			.info		{text-align:center;}
+			.c-st		{display:inline-block; padding:3px 5px; border-radius:50px; background:#a2a2a2; color:#fff; font-weight:bold; font-size:10px;}
+			.c-Silver,
+			.c-baby		{font-weight:bold; font-size:10px; color:#666; letter-spacing:1px;}
+			
+			/*	Tablesort style	*/
 			table		{background:#fff; max-width:100%; border-spacing:0; width:100%; margin:10px 0; border:1px solid #ddd; border-collapse:separate;
 			*border-collapse:collapsed; -webkit-box-shadow:0 0 4px rgba(0,0,0,0.10); -moz-box-shadow:0 0 4px rgba(0,0,0,0.10); box-shadow:0 0 4px rgba(0,0,0,0.10);}
 			table th,
@@ -95,14 +103,14 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body><div id="test" style="width:960px;"></div>
 		<div class="table_wrap">
 			<div class="head_wrap"><h2>Movies</h2></div>
 			<table id="table_summary">
 				<thead>
 				<tr>
-					<th>Title</th>
-					<th>Runtime</th>
+					<th class="title_head">Title</th>
+					<th class="run_head">Runtime</th>
 					<th>First Show</th>
 					<th>Last Show</th>
 					<th>Count</th>
@@ -117,8 +125,9 @@
 			<table id="table_list">
 				<thead>
 				<tr>
-					<th>Title</th>
-					<th>Runtime</th>
+					<th class="title_head">Title</th>
+					<th class="run_head">Runtime</th>
+					<th>Info</th>
 					<th>Showtime</th>
 					<th data-sort-method='none' class="no-sort">Tickets</th>
 				</tr>
@@ -147,6 +156,8 @@
 			const dump = document.getElementById("dump");
 			const list = document.getElementById("list");
 			
+			//document.getElementById("test").innerText=JSON.stringify(dat)
+			
 			let movies = {};
 			let getmovie = function(name)
 			{
@@ -167,6 +178,14 @@
 					{
 						for (let s of f.Sessions)
 						{
+							let symbol    = null;
+							let hovertxt  = null;
+							for (let c of s.Collections)
+							{
+								if ( c.ID != 1823 ){ symbol    = c.Symbol; }
+								if ( c.ID != 1823 ){ hovertxt  = c.Hover; }
+							}
+							
 							let year      = parseInt(d.Key.slice(0,4));
 							let month     = parseInt(d.Key.slice(4,6));
 							let day       = parseInt(d.Key.slice(6,8));
@@ -183,6 +202,7 @@
 							const tr      = document.createElement("tr");
 							const title   = document.createElement("td");
 							const run     = document.createElement("td");
+							const info    = document.createElement("td");
 							const date    = document.createElement("td");
 							const time    = document.createElement("td");
 							const tix     = document.createElement("td");
@@ -190,6 +210,7 @@
 							
 							title.className = 'title';
 							run.className   = 'run';
+							info.className  = 'info';
 							date.className  = 'date';
 							time.className  = 'time';
 							tix.className   = 'tix';
@@ -205,19 +226,23 @@
 							let runsort     = document.createAttribute("data-sort");
 							let keysort     = document.createAttribute("data-sort");
 							let whensort    = document.createAttribute("data-sort");
+							let hover       = document.createAttribute("title");
 							
 							if ( unix < ( new Date() ).getTime() ){ tr.className = 'over'; }
 							
 							runsort.value   = String(runtime).padStart(4,"0");
 							keysort.value   = d.Key;
 							whensort.value  = unixpad;
+							hover.value     = hovertxt;
 							
 							run.setAttributeNode(runsort);
 							date.setAttributeNode(keysort);
 							when.setAttributeNode(whensort);
+							info.setAttributeNode(hover);
 							
 							title.innerHTML+= it.Title;
 							run.innerHTML  += it.Runtime;
+							info.innerHTML += symbol || "";
 							date.innerHTML += d.Display;
 							time.innerHTML += s.Display;
 							tix.innerHTML  += "<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>";
@@ -226,8 +251,11 @@
 							dump.appendChild(tr);
 							tr.appendChild(title);
 							tr.appendChild(run);
+							tr.appendChild(info);
 							tr.appendChild(when);
 							tr.appendChild(tix);
+							
+							
 							
 							let movie    = getmovie(it.Title);
 							movie.title  = it.Title;
@@ -242,7 +270,6 @@
 							
 							movie.count  = movie.count || 0;
 							movie.count  ++
-							
 						}
 					}
 				}
