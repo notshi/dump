@@ -154,6 +154,9 @@
 		window.gfdx = function(a)
 		{
 			var dat=window.__gfminiguidedata;
+
+console.log(dat)
+
 			const dump = document.getElementById("dump");
 			const list = document.getElementById("list");
 			
@@ -170,15 +173,20 @@
 				}
 				return movie;
 			}
-			
+
 			for (let it of dat.Schedule)
 			{
+//				console.log(it.Title)
+//				console.log(it)
 				for (let d of it.Dates)
 				{
-					for (let f of d.Formats)
+//					console.log(d.Display)
+//					console.log(d)
+					for (let s of d.Sessions)
 					{
-						for (let s of f.Sessions)
-						{
+//						console.log(s.Display)
+//						console.log(s)
+
 							let symbol    = null;
 							let hovertxt  = null;
 							for (let c of s.Collections)
@@ -271,10 +279,11 @@
 							
 							movie.count  = movie.count || 0;
 							movie.count  ++
-						}
+
 					}
 				}
 			}
+
 			
 			for (let name in movies)
 			{
