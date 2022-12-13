@@ -127,10 +127,10 @@
 				<thead>
 				<tr>
 					<th class="title_head">Title</th>
-					<th class="run_head">Runtime</th>
 					<th>Info</th>
-					<th>Showtime</th>
-					<th data-sort-method='none' class="no-sort">Tickets</th>
+					<th>date</th>
+					<th>start</th>
+					<th>finish</th>
 				</tr>
 				</thead>
 				<tbody id="dump"></tbody>
@@ -206,11 +206,35 @@ console.log(dat)
 							
 							let newdate   = new Date(year, month-1, day, hour, minute);		// date and time grouped
 							let unix      = newdate.getTime();					// unix time stamp
-							let unixpad   = String(newdate.getTime()).padStart(16,"0");		// unix time stamp with front padding to keep same length
 							
+							let runhour     = 0;
+							let runminute   = 0;
+							let ss   = it.Runtime.split(" ");
+							if(ss.length==2)
+							{
+								runhour     = parseInt(ss[0]);
+								runminute   = parseInt(ss[1]);
+							}
+							else
+							{
+								runminute   = parseInt(ss[0]);
+							}
+							let runtime     = runhour*60 + runminute;
+							let whendate    = d.Display.split(" ");				// runtime converted to minutes
+
+							let start_time=new Date(newdate.getTime())
+							let finish_time=new Date(newdate.getTime()+((runtime+20)*60*1000))
+							let get_date=function(d){
+//								return d.toISOString().split('T')[0]
+								let aa  = String(d).split(" ");
+								let ab  = aa[4].split(":")
+								return aa[1]+' '+aa[2]+' '+aa[0];
+							}
+							let get_time=function(d){ return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2) }
+
 							const tr      = document.createElement("tr");
 							const title   = document.createElement("td");
-							const run     = document.createElement("td");
+							const finish  = document.createElement("td");
 							const info    = document.createElement("td");
 							const date    = document.createElement("td");
 							const time    = document.createElement("td");
@@ -218,58 +242,44 @@ console.log(dat)
 							const when    = document.createElement("td");
 							
 							title.className = 'title';
-							run.className   = 'run';
+							finish.className   = 'run';
 							info.className  = 'info';
 							date.className  = 'date';
 							time.className  = 'time';
 							tix.className   = 'tix';
 							when.className  = 'when';
-							
-							let runlength   = it.Runtime.split(" ");
-							let runhour     = runlength[0];
-							let runminute   = runlength[1];
-							runhour         = parseInt(runhour);
-							runminute       = parseInt(runminute);
-							let runtime     = runhour*60 + runminute;
-							let whendate    = d.Display.split(" ");				// runtime converted to minutes
-							let runsort     = document.createAttribute("data-sort");
-							let keysort     = document.createAttribute("data-sort");
-							let whensort    = document.createAttribute("data-sort");
-							let hover       = document.createAttribute("title");
-							
+														
 							if ( unix < ( new Date() ).getTime() ){ tr.className = 'over'; }
 							
-							runsort.value   = String(runtime).padStart(4,"0");
-							keysort.value   = d.Key;
-							whensort.value  = unixpad;
-							hover.value     = hovertxt;
-							
-							run.setAttributeNode(runsort);
-							date.setAttributeNode(keysort);
-							when.setAttributeNode(whensort);
-							info.setAttributeNode(hover);
-							
+							date.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
+							time.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
+							finish.setAttribute("data-sort",String(finish_time.getTime()).padStart(16,"0"));
+							when.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
+							info.setAttribute("title",hovertxt);
+    
 							title.innerHTML+= it.Title;
-							run.innerHTML  += it.Runtime;
+							finish.innerHTML  += get_time(finish_time) // runtime+"m";
 							info.innerHTML += symbol || "";
-							date.innerHTML += d.Display;
-							time.innerHTML += s.Display;
+							date.innerHTML += get_date(start_time);
+							time.innerHTML += get_time(start_time);
 							tix.innerHTML  += "<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>";
 							when.innerHTML += whendate[2]+" "+whendate[1]+" ("+s.Display+") "+whendate[0];
 							
 							dump.appendChild(tr);
 							tr.appendChild(title);
-							tr.appendChild(run);
 							tr.appendChild(info);
-							tr.appendChild(when);
-							tr.appendChild(tix);
+							tr.appendChild(date);
+							tr.appendChild(time);
+							tr.appendChild(finish);
+//							tr.appendChild(when);
+//							tr.appendChild(tix);
 							
 							
 							
 							let movie    = getmovie(it.Title);
 							movie.title  = it.Title;
 							movie.run    = runtime;
-							movie.runraw = it.Runtime;
+//							movie.runraw = it.Runtime;
 							movie.url    = "<a class='url_abt' href='https://bradford.lightcinemas.co.uk"+it.Url+"' target='_blank'>ABOUT</a>";
 							
 							if ( !movie.first ){ movie.first=newdate }
@@ -316,7 +326,7 @@ console.log(dat)
 			    count.className  = 'count';
 			    url.className    = 'url';
 			    title.innerHTML += movie.title;
-			    run.innerHTML   += movie.runraw;
+			    run.innerHTML   += movie.run+"m";//+Math.floor(movie.run/6)/10+"h";
 			    first.innerHTML += getdate(movie.first);
 			    last.innerHTML  += getdate(movie.last);
 			    count.innerHTML += movie.count;
