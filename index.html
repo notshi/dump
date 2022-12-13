@@ -115,7 +115,6 @@
 					<th>First Show</th>
 					<th>Last Show</th>
 					<th>Count</th>
-					<th data-sort-method='none' class="no-sort">About</th>
 				</tr>
 				</thead>
 				<tbody id="list"></tbody>
@@ -257,7 +256,7 @@ console.log(dat)
 							when.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
 							info.setAttribute("title",hovertxt);
     
-							title.innerHTML+= it.Title;
+							title.innerHTML+= "<a href='https://bradford.thelight.co.uk"+it.Url+"' target='_blank'>"+it.Title+"</a>";
 							finish.innerHTML  += get_time(finish_time) // runtime+"m";
 							info.innerHTML += symbol || "";
 							date.innerHTML += get_date(start_time);
@@ -277,7 +276,7 @@ console.log(dat)
 							
 							
 							let movie    = getmovie(it.Title);
-							movie.title  = it.Title;
+							movie.title  = "<a href='https://bradford.thelight.co.uk"+it.Url+"' target='_blank'>"+it.Title+"</a>";;
 							movie.run    = runtime;
 //							movie.runraw = it.Runtime;
 							movie.url    = "<a class='url_abt' href='https://bradford.thelight.co.uk"+it.Url+"' target='_blank'>ABOUT</a>";
@@ -305,7 +304,7 @@ console.log(dat)
 			    const first   = document.createElement("td");
 			    const last    = document.createElement("td");
 			    const count   = document.createElement("td");
-			    const url     = document.createElement("td");
+//			    const url     = document.createElement("td");
 			    
 			    let runsort      = document.createAttribute("data-sort");
 			    let countsort    = document.createAttribute("data-sort");
@@ -324,13 +323,13 @@ console.log(dat)
 			    first.className  = 'first';
 			    last.className   = 'last';
 			    count.className  = 'count';
-			    url.className    = 'url';
+//			    url.className    = 'url';
 			    title.innerHTML += movie.title;
 			    run.innerHTML   += movie.run+"m";//+Math.floor(movie.run/6)/10+"h";
 			    first.innerHTML += getdate(movie.first);
 			    last.innerHTML  += getdate(movie.last);
 			    count.innerHTML += movie.count;
-			    url.innerHTML   += movie.url;
+//			    url.innerHTML   += movie.url;
 			    
 			    run.setAttributeNode(runsort);
 			    count.setAttributeNode(countsort);
@@ -341,7 +340,7 @@ console.log(dat)
 			    tr.appendChild(first);
 			    tr.appendChild(last);
 			    tr.appendChild(count);
-			    tr.appendChild(url);
+//			    tr.appendChild(url);
 			    
 			}
 		}
