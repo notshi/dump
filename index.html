@@ -172,6 +172,15 @@ console.log(dat)
 				}
 				return movie;
 			}
+			
+			let get_date=function(d){
+				let aa  = String(d).split(" ");
+				let ab  = aa[4].split(":")
+				return aa[1]+' '+aa[2]+' '+aa[0];
+			}
+			let get_time=function(d){ return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2) }
+
+			let daymap={}
 
 			for (let it of dat.Schedule)
 			{
@@ -223,13 +232,6 @@ console.log(dat)
 
 							let start_time=new Date(newdate.getTime())
 							let finish_time=new Date(newdate.getTime()+((runtime+20)*60*1000))
-							let get_date=function(d){
-//								return d.toISOString().split('T')[0]
-								let aa  = String(d).split(" ");
-								let ab  = aa[4].split(":")
-								return aa[1]+' '+aa[2]+' '+aa[0];
-							}
-							let get_time=function(d){ return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2) }
 
 							const tr      = document.createElement("tr");
 							const title   = document.createElement("td");
@@ -288,9 +290,46 @@ console.log(dat)
 							
 							movie.count  = movie.count || 0;
 							movie.count  ++
+							
+							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24)) ]=true
+							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24))+1 ]=true
 
 					}
 				}
+			}
+			
+			for( t in daymap )
+			{
+				let d1=new Date(t*(1000*60*60*24))
+				let d2=String(d1.getTime()).padStart(16,"0")
+
+				const tr      = document.createElement("tr");
+				const title   = document.createElement("td");
+				const finish  = document.createElement("td");
+				const info    = document.createElement("td");
+				const date    = document.createElement("td");
+				const time    = document.createElement("td");
+				
+				tr.className = 'over';
+				
+				title.className = 'title';
+				finish.className   = 'run';
+				info.className  = 'info';
+				date.className  = 'date';
+				time.className  = 'time';
+
+				date.setAttribute("data-sort",d2);
+				time.setAttribute("data-sort",d2);
+				finish.setAttribute("data-sort",d2);
+
+//				date.innerHTML += get_date(d1);
+				
+				dump.appendChild(tr);
+				tr.appendChild(title);
+				tr.appendChild(info);
+				tr.appendChild(date);
+				tr.appendChild(time);
+				tr.appendChild(finish);
 			}
 
 			
