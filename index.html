@@ -178,11 +178,7 @@
 			}
 		}
 		var cinema=getQueryVariable("cinema") || "Bradford"
-		for( span of document.getElementsByClassName("cinema_name") )
-		{
-			console.log(span)
-			span.innerHTML=cinema
-		}
+		for( span of document.getElementsByClassName("cinema_name") ) { span.innerHTML=cinema }
 		var script = document.createElement('script');
 		script.src = "https://"+cinema.toLowerCase()+".thelight.co.uk/resource/services/miniguide/data.ashx";
 		document.head.appendChild(script);
