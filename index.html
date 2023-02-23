@@ -26,6 +26,9 @@
 			.foot_wrap,
 			.table_wrap	{max-width:1280px; width:960px; padding:2em 4em; margin:0 auto;}
 			.table_wrap	{font-size:12px; line-height:1.5em;}
+			.head_wrap.top_no_pad	{padding:0 0 2em 0;}
+			.table_wrap.top_no_pad	{padding:0 4em 2em 4em;}
+			.cine_wrap	{display:flex; flex-wrap:wrap; gap:0.8em 1em;}
 			
 			#test		{font-family:monospace; font-size:1px; overflow:wrap; margin:0 auto;}
 			
@@ -42,6 +45,11 @@
 			a.url_tix:hover	{background-color:#499fc9;}
 			a.url_abt	{background-color:#747474;}
 			a.url_abt:hover	{background-color:#969696;}
+			
+			.cinema_name{font-weight:bold;}
+			.cine_head	{margin-top:1.5em; font-weight:bold; margin-bottom:0.8em; border-bottom:1px solid #ccc; padding-bottom:0.5em;}
+			a.cine		{display:inline-block; background:#ccc; border-radius:4px; padding:0.5em 1em; color:#444;}
+			a.cine:hover{background:#ddd;}
 			
 			.foot_wrap	{font-size:14px;}
 			.foot_cont	{box-sizing:border-box; display:inline-block; padding-right:1em; width:100%; vertical-align:top;}
@@ -78,7 +86,7 @@
 			table thead:first-child tr:first-child th,
 			table tbody:first-child tr:first-child th,
 			table tbody:first-child tr:first-child td	{border-top:0;}
-			table td:first-child				{font-size:14px;}
+			table td:first-child			{font-size:14px;}
 			table tr.over					{background-color:#f1f1f1; color:#afaeae;}
 
 			th[role=columnheader]:not(.no-sort)		{cursor:pointer;}
@@ -97,10 +105,19 @@
 			only screen and (min-device-pixel-ratio: 1.5) {
 
 			.head_wrap	{padding:1em; margin:0 auto; line-height:2em;}
-			.foot_wrap	{padding:2em; font-size:12px;}
+			.foot_wrap	{padding:2em;}
+			.table_wrap.top_no_pad,
 			.table_wrap	{padding:1vh; max-width:initial;}
 			span#date	{display:block; padding-top:1em;}
-
+			
+			.table_wrap.top_no_pad,
+			.table_wrap,
+			table,
+			.foot_wrap,
+			.foot_small,
+			a.top	{font-size:1em;}
+			
+			table th, table td	{line-height:1em;}
 			}
 		</style>
 	</head>
@@ -120,8 +137,8 @@
 				<tbody id="list"></tbody>
 			</table>
 		</div>
-		<div class="table_wrap">
-			<div class="head_wrap"><h2>Showings</h2></div>
+		<div class="table_wrap top_no_pad">
+			<div class="head_wrap top_no_pad"><h2>Showings</h2></div>
 			<table id="table_list">
 				<thead>
 				<tr>
@@ -141,19 +158,21 @@
 					<div class="foot_bold"><p>About</p></div>
 					<div class="foot_text">
 						<p>Live movie showings at The Light Cinema <span class="cinema_name">Bradford</span> in a sortable list.</p>
-						<p>Try Also :</p>
-						<a href="?cinema=Addlestone">Addlestone</a>
-						<a href="?cinema=Banbury">Banbury</a>
-						<a href="?cinema=Bolton">Bolton</a>
-						<a href="?cinema=Bradford">Bradford</a>
-						<a href="?cinema=Cambridge">Cambridge</a>
-						<a href="?cinema=NewBrighton">NewBrighton</a>
-						<a href="?cinema=Sheffield">Sheffield</a>
-						<a href="?cinema=SittingBourne">SittingBourne</a>
-						<a href="?cinema=Stockport">Stockport</a>
-						<a href="?cinema=Thetford">Thetford</a>
-						<a href="?cinema=Walsall">Walsall</a>
-						<a href="?cinema=Wisbech">Wisbech</a>
+						<div class="cine_head">More locations</div>
+						<div class="cine_wrap">
+							<a href="?cinema=Addlestone" class="cine">Addlestone</a>
+							<a href="?cinema=Banbury" class="cine">Banbury</a>
+							<a href="?cinema=Bolton" class="cine">Bolton</a>
+							<a href="?cinema=Bradford" class="cine">Bradford</a>
+							<a href="?cinema=Cambridge" class="cine">Cambridge</a>
+							<a href="?cinema=NewBrighton" class="cine">NewBrighton</a>
+							<a href="?cinema=Sheffield" class="cine">Sheffield</a>
+							<a href="?cinema=SittingBourne" class="cine">SittingBourne</a>
+							<a href="?cinema=Stockport" class="cine">Stockport</a>
+							<a href="?cinema=Thetford" class="cine">Thetford</a>
+							<a href="?cinema=Walsall" class="cine">Walsall</a>
+							<a href="?cinema=Wisbech" class="cine">Wisbech</a>
+						</div>
 				</div>
 					<div class="foot_bold"><p><a href="http://github.com/notshi/dump">dump is on Github</a></p></div>
 					<div class="foot_small">Project by Wetgenes, 2022-present</div>
