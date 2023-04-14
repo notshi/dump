@@ -231,6 +231,12 @@ console.log(dat)
 
 			let daymap={}
 
+
+			let shorts={
+				"15 Certificate":"15",
+				"18 Certificate":"18",
+			}
+
 			for (let it of dat.Schedule)
 			{
 //				console.log(it.Title)
@@ -245,12 +251,47 @@ console.log(dat)
 //						console.log(s.Display)
 //						console.log(s)
 
-							let symbol    = null;
-							let hovertxt  = null;
+							let d3    = null;
+							let symbol    = [];
+							let hovertxt  = [];
 							for (let c of s.Collections)
 							{
-								if ( c.ID != 1823 ){ symbol    = c.Symbol; }
-								if ( c.ID != 1823 ){ hovertxt  = c.Hover; }
+								if ( c.Symbol )
+								{
+									symbol.push(c.Symbol);
+									if ( c.Hover ){ hovertxt.push(c.Hover); }
+								}
+								else
+								if ( c.Title )
+								{
+									// shorten some of these
+									if( shorts[ c.Title ] )
+									{
+										symbol.push( shorts[ c.Title ] );
+										hovertxt.push( c.Title );
+									}
+									else
+									{
+										symbol.push(c.Title);
+										if ( c.Hover ){ hovertxt.push(c.Hover); }
+									}
+								}
+							}
+							if(symbol.length>0)
+							{
+								symbol=symbol.join(" / ")
+							}
+							else
+							{
+								symbol=null
+							}
+							if(hovertxt.length>0)
+							{
+								hovertxt=hovertxt.join(" / ")
+							}
+							else
+							{
+								hovertxt=null
 							}
 							
 							let year      = parseInt(d.Key.slice(0,4));
@@ -306,7 +347,7 @@ console.log(dat)
 							time.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
 							finish.setAttribute("data-sort",String(finish_time.getTime()).padStart(16,"0"));
 							when.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
-							info.setAttribute("title",hovertxt);
+							if(hovertxt) { info.setAttribute("title",hovertxt); }
     
 							title.innerHTML+= "<a href='https://"+cinema.toLowerCase()+".thelight.co.uk"+it.Url+"' target='_blank'>"+it.Title+"</a>";
 							finish.innerHTML  += get_time(finish_time) // runtime+"m";
