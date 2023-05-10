@@ -239,17 +239,75 @@ console.log(dat)
 
 			for (let it of dat.Schedule)
 			{
+				let movie    = getmovie(it.Title);
+				let movie_idx=0
+
+				let runhour     = 0;
+				let runminute   = 0;
+				let ss   = it.Runtime.split(" ");
+				if(ss.length==2)
+				{
+					runhour     = parseInt(ss[0]);
+					runminute   = parseInt(ss[1]);
+				}
+				else
+				{
+					runminute   = parseInt(ss[0]);
+				}
+				let runtime     = runhour*60 + runminute;
+
+				for (let d of it.Dates || {} )
+				{
+					for (let s of d.Sessions)
+					{
+
+							let year      = parseInt(d.Key.slice(0,4));
+							let month     = parseInt(d.Key.slice(4,6));
+							let day       = parseInt(d.Key.slice(6,8));
+							let timesplit = s.Display.split(".");
+							let hour      = timesplit[0];
+							let minute    = timesplit[1];
+							hour          = parseInt(hour);
+							minute        = parseInt(minute);
+							
+							let newdate   = new Date(year, month-1, day, hour, minute);		// date and time grouped
+							let unix      = newdate.getTime();					// unix time stamp
+
+							let start_time=new Date(newdate.getTime())
+
+							movie.title  = "<a href='https://"+cinema.toLowerCase()+".thelight.co.uk"+it.Url+"' target='_blank'>"+it.Title+"</a>";;
+							movie.run    = runtime;
+//							movie.runraw = it.Runtime;
+							movie.url    = "<a class='url_abt' href='https://"+cinema.toLowerCase()+".thelight.co.uk"+it.Url+"' target='_blank'>ABOUT</a>";
+							
+							if ( !movie.first ){ movie.first=newdate }
+							if ( !movie.last  ){ movie.last =newdate }
+							if ( movie.first.getTime() > newdate.getTime() ){ movie.first=newdate }
+							if ( movie.last.getTime()  < newdate.getTime() ){ movie.last =newdate }
+							
+							movie.count  = movie.count || 0;
+							movie.count  ++
+							
+							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24)) ]=true
+							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24))+1 ]=true
+					}
+				}
+
 //				console.log(it.Title)
 //				console.log(it)
-				if(it.Dates)
-				for (let d of it.Dates)
+				for (let d of it.Dates || {} )
 				{
 //					console.log(d.Display)
 //					console.log(d)
+					
 					for (let s of d.Sessions)
 					{
+						movie_idx++
+
+
 //						console.log(s.Display)
 //						console.log(s)
+
 
 							let d3    = null;
 							let symbol    = [];
@@ -276,6 +334,16 @@ console.log(dat)
 										if ( c.Hover ){ hovertxt.push(c.Hover); }
 									}
 								}
+							}
+							if( movie_idx==1 )
+							{
+								symbol.push("First");
+								hovertxt.push("First Showing");
+							}
+							if( movie_idx==movie.count )
+							{
+								symbol.push("Last");
+								hovertxt.push("Last Showing");
 							}
 							if(symbol.length>0)
 							{
@@ -306,19 +374,6 @@ console.log(dat)
 							let newdate   = new Date(year, month-1, day, hour, minute);		// date and time grouped
 							let unix      = newdate.getTime();					// unix time stamp
 							
-							let runhour     = 0;
-							let runminute   = 0;
-							let ss   = it.Runtime.split(" ");
-							if(ss.length==2)
-							{
-								runhour     = parseInt(ss[0]);
-								runminute   = parseInt(ss[1]);
-							}
-							else
-							{
-								runminute   = parseInt(ss[0]);
-							}
-							let runtime     = runhour*60 + runminute;
 							let whendate    = d.Display.split(" ");				// runtime converted to minutes
 
 							let start_time=new Date(newdate.getTime())
@@ -367,24 +422,6 @@ console.log(dat)
 //							tr.appendChild(tix);
 							
 							
-							
-							let movie    = getmovie(it.Title);
-							movie.title  = "<a href='https://"+cinema.toLowerCase()+".thelight.co.uk"+it.Url+"' target='_blank'>"+it.Title+"</a>";;
-							movie.run    = runtime;
-//							movie.runraw = it.Runtime;
-							movie.url    = "<a class='url_abt' href='https://"+cinema.toLowerCase()+".thelight.co.uk"+it.Url+"' target='_blank'>ABOUT</a>";
-							
-							if ( !movie.first ){ movie.first=newdate }
-							if ( !movie.last  ){ movie.last =newdate }
-							if ( movie.first.getTime() > newdate.getTime() ){ movie.first=newdate }
-							if ( movie.last.getTime()  < newdate.getTime() ){ movie.last =newdate }
-							
-							movie.count  = movie.count || 0;
-							movie.count  ++
-							
-							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24)) ]=true
-							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24))+1 ]=true
-
 					}
 				}
 			}
