@@ -239,6 +239,8 @@
 
 			for (let it of dat.Schedule)
 			{
+				if(!it.Dates) { continue }
+
 				let movie    = getmovie(it.Title);
 				let movie_idx=0
 
@@ -256,7 +258,7 @@
 				}
 				let runtime     = runhour*60 + runminute;
 
-				for (let d of it.Dates || {} )
+				for (let d of it.Dates || [] )
 				{
 					for (let s of d.Sessions)
 					{
@@ -295,7 +297,7 @@
 
 //				console.log(it.Title)
 //				console.log(it)
-				for (let d of it.Dates || {} )
+				for (let d of it.Dates || [] )
 				{
 //					console.log(d.Display)
 //					console.log(d)
@@ -464,6 +466,9 @@
 			for (let name in movies)
 			{
 			    let movie = movies[name];
+
+				if ( !movie.first ){ movie.first=new Date(0) }
+				if ( !movie.last  ){ movie.last =new Date(0) }
 			    
 			    const tr      = document.createElement("tr");
 			    const title   = document.createElement("td");
