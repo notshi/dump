@@ -493,11 +493,6 @@
 					tr.className = 'leaving';
 				}
 
-			    let runsort      = document.createAttribute("data-sort");
-			    let countsort    = document.createAttribute("data-sort");
-			    runsort.value    = String(movie.run).padStart(4,"0");
-			    countsort.value  = String(movie.count).padStart(4,"0");
-			    
 			    let getdate = function(d)
 			    {
 				let aa  = String(d).split(" ");
@@ -518,8 +513,10 @@
 			    count.innerHTML += movie.count;
 //			    url.innerHTML   += movie.url;
 			    
-			    run.setAttributeNode(runsort);
-			    count.setAttributeNode(countsort);
+				run.setAttribute("data-sort",String(movie.run).padStart(16,"0"));
+				count.setAttribute("data-sort",String(movie.count).padStart(16,"0"));
+				first.setAttribute("data-sort",String(movie.first.getTime()).padStart(16,"0"));
+				last.setAttribute("data-sort",String(movie.last.getTime()).padStart(16,"0"));
 			    
 			    list.appendChild(tr);
 			    tr.appendChild(title);
