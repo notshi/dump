@@ -405,7 +405,7 @@
 														
 							if ( unix < nowtime ){ tr.className = 'over'; } // already started
 							else
-							if( ( movie_idx==movie.count ) && ( movie.last && ( movie.last.getTime() < nowtime+(4*24*60*60*1000) ) ) ) // no more after 4 days
+							if( ( movie_idx==movie.count ) && ( movie.last && ( movie.last.getTime() < nowtime+(3*24*60*60*1000) ) ) ) // no more after 3 days
 							{
 								tr.className = 'leaving';
 							}
@@ -488,7 +488,7 @@
 			    const count   = document.createElement("td");
 //			    const url     = document.createElement("td");
 			    
-				if( movie.last && ( movie.last.getTime() < nowtime+(4*24*60*60*1000) ) ) // no more after 4 days
+				if( movie.last && ( movie.last.getTime() < nowtime+(3*24*60*60*1000) ) ) // no more after 3 days
 				{
 					tr.className = 'leaving';
 				}
