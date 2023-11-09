@@ -76,6 +76,11 @@
 			table td	{padding:6px; line-height:18px; text-align:left; border-top:1px solid #ddd;}
 			table th	{background:#eee; background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#eee)); background:-moz-linear-gradient(top, #f6f6f6, #eee); text-shadow:0 1px 0 #fff; font-weight:bold; vertical-align:bottom;}
 			table td	{vertical-align:middle;}
+			table thead:first-child tr th	{vertical-align:top;}
+			table td.first,
+			table td.date,
+			table td.last	{white-space:nowrap;}
+			table td.title	{white-space:break-spaces; word-break:break-word;}
 			table thead:first-child tr th,
 			table thead:first-child tr td			{border-top:0;}
 			table tbody + tbody				{border-top:2px solid #ddd;}
