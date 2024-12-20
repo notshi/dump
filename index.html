@@ -9,7 +9,7 @@
 		Licensed under the MIT license whose full text can be found at http://opensource.org/licenses/MIT -->
 		<style>
 			/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}img,embed,iframe,object,audio,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0;text-align:left}
-			
+
 			html		{scroll-behavior:smooth;}
 			body, html	{-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; font-weight:normal; font-style:normal;}
 			body		{background:#f2f2f2; font-family:sans-serif; font-size:1rem; line-height:1.5; color:#444;}
@@ -29,46 +29,46 @@
 			.head_wrap.top_no_pad	{padding:0 0 2em 0;}
 			.table_wrap.top_no_pad	{padding:0 4em 2em 4em;}
 			.cine_wrap	{display:flex; flex-wrap:wrap; gap:0.8em 1em;}
-			
+
 			#test		{font-family:monospace; font-size:1px; overflow:wrap; margin:0 auto;}
-			
+
 			#col_title,
 			#col_date,
 			#col_run,
 			#col_time,
 			#col_tix,
 			#col_url	{display:inline-block; vertical-align:top;}
-			
+
 			a.url_tix,
 			a.url_abt	{display:block; padding:3px 10px; font-size:12px; text-align:center; color:#fff; border-radius:4px;}
 			a.url_tix	{background-color:#056b9c; font-weight:bold;}
 			a.url_tix:hover	{background-color:#499fc9;}
 			a.url_abt	{background-color:#747474;}
 			a.url_abt:hover	{background-color:#969696;}
-			
+
 			.cinema_name{font-weight:bold;}
 			.cine_head	{margin-top:1.5em; font-weight:bold; margin-bottom:0.8em; border-bottom:1px solid #ccc; padding-bottom:0.5em;}
 			a.cine		{display:inline-block; background:#ccc; border-radius:4px; padding:0.5em 1em; color:#444;}
 			a.cine:hover{background:#ddd;}
-			
+
 			.foot_wrap	{font-size:14px;}
 			.foot_cont	{box-sizing:border-box; display:inline-block; padding-right:1em; width:100%; vertical-align:top;}
 			.foot_small	{font-size:12px;}
 			.foot_bold	{font-weight:bold;}
 			.foot_bold p	{margin:1.5em 0;}
 			span#date	{font-style:italic;}
-			
+
 			/*	Back to top link	*/
 			a.top		{display:block; width:100%; padding:20px 0; text-align:center; font-size:12px; color:#444; cursor:pointer;}
 			a.top:hover	{background-color:#F8F8F8;}
-			
+
 			/*	Extra style	*/
 			.info		{text-align:center;}
 			.c-st		{display:inline-block; padding:3px 5px; border-radius:50px; background:#a2a2a2; color:#fff; font-weight:bold; font-size:10px;}
 			.c-Silver,
 			.c-baby		{font-weight:bold; font-size:10px; color:#666; letter-spacing:1px;}
 			.c-aut		{color:#a403ff; font-weight:bold; letter-spacing:2px; font-variant:all-small-caps;}
-			
+
 			/*	Tablesort style	*/
 			table		{background:#fff; max-width:100%; border-spacing:0; width:100%; margin:10px 0; border:1px solid #ddd; border-collapse:separate;
 			*border-collapse:collapsed; -webkit-box-shadow:0 0 4px rgba(0,0,0,0.10); -moz-box-shadow:0 0 4px rgba(0,0,0,0.10); box-shadow:0 0 4px rgba(0,0,0,0.10);}
@@ -101,10 +101,46 @@
 			th[aria-sort]:not(.no-sort):after		{visibility:visible; opacity:0.4;}
 			th[role=columnheader]:not(.no-sort):hover:after	{visibility:visible; opacity:1;}
 
-			
+			table { background: #eee; }
+			table td.duration {
+				border:0px solid #999; width:16px; border-width: 0px 2px 2px 0px;
+				word-break: break-all;vertical-align: text-top; border-top: 2px solid #fff; }
+			table th.pad { width:2px; }
+			table td.pad { width:2px; }
+
+/*
+			table td.count { background: #eee; }
+*/
+			table td.pad , table td.finish , table td.start
+			{ border: 0px; width:2px; border-top: 0px; border-bottom:2px solid #999; border-top: 2px solid #fff; }
+
+			table tr.pad td { border 0px; }
+
+/*
+			table tr {background: #eee;}
+			#table_summary td,
+			table tr td:nth-child(1),
+			table tr td:nth-child(2),
+			table tr td:nth-child(3) {background: #eee;}
+
+			table tr:nth-child(12n+1)  {background: #f441;}
+			table tr:nth-child(12n+2)  {background: #ff01;}
+			table tr:nth-child(12n+3)  {background: #0f01;}
+			table tr:nth-child(12n+4)  {background: #0ff1;}
+			table tr:nth-child(12n+5)  {background: #44f1;}
+			table tr:nth-child(12n+6)  {background: #f0f1;}
+			table tr:nth-child(12n+7)  {background: #f442;}
+			table tr:nth-child(12n+8)  {background: #ff02;}
+			table tr:nth-child(12n+9)  {background: #0f02;}
+			table tr:nth-child(12n+10) {background: #0ff2;}
+			table tr:nth-child(12n+11) {background: #44f2;}
+			table tr:nth-child(12n+12) {background: #f0f2;}
+*/
+
+
 			/*	PHONES & STUFF
 				============================================= */
-				
+
 			@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
 			only screen and (-o-min-device-pixel-ratio: 3/2),
 			only screen and (min--moz-device-pixel-ratio: 1.5),
@@ -116,7 +152,7 @@
 			.table_wrap.top_no_pad,
 			.table_wrap	{padding:1vh; max-width:initial;}
 			span#date	{display:block; padding-top:1em;}
-			
+
 			.foot_wrap,
 			.foot_small, a.top	{font-size:1em;}
 			table td:first-child{font-size:1.1em;}
@@ -150,6 +186,7 @@
 					<th data-sort-default >date</th>
 					<th>start</th>
 					<th>finish</th>
+					<th colspan="20">duration</th>
 				</tr>
 				</thead>
 				<tbody id="dump"></tbody>
@@ -215,9 +252,9 @@
 
 			const dump = document.getElementById("dump");
 			const list = document.getElementById("list");
-			
+
 			//document.getElementById("test").innerText=JSON.stringify(dat)
-			
+
 			let movies = {};
 			let getmovie = function(name)
 			{
@@ -229,7 +266,7 @@
 				}
 				return movie;
 			}
-			
+
 			let get_date=function(d){
 				let aa  = String(d).split(" ");
 				let ab  = aa[4].split(":")
@@ -279,7 +316,7 @@
 							let minute    = timesplit[1];
 							hour          = parseInt(hour);
 							minute        = parseInt(minute);
-							
+
 							let newdate   = new Date(year, month-1, day, hour, minute);		// date and time grouped
 							let unix      = newdate.getTime();					// unix time stamp
 
@@ -289,15 +326,15 @@
 							movie.run    = runtime;
 //							movie.runraw = it.Runtime;
 							movie.url    = "<a class='url_abt' href='https://"+cinema.toLowerCase()+".thelight.co.uk"+it.Url+"' target='_blank'>ABOUT</a>";
-							
+
 							if ( !movie.first ){ movie.first=newdate }
 							if ( !movie.last  ){ movie.last =newdate }
 							if ( movie.first.getTime() > newdate.getTime() ){ movie.first=newdate }
 							if ( movie.last.getTime()  < newdate.getTime() ){ movie.last =newdate }
-							
+
 							movie.count  = movie.count || 0;
 							movie.count  ++
-							
+
 							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24)) ]=true
 							daymap[ Math.floor(start_time.getTime()/(1000*60*60*24))+1 ]=true
 					}
@@ -309,7 +346,7 @@
 				{
 //					console.log(d.Display)
 //					console.log(d)
-					
+
 					for (let s of d.Sessions)
 					{
 						movie_idx++
@@ -371,7 +408,7 @@
 							{
 								hovertxt=null
 							}
-							
+
 
 
 							let year      = parseInt(d.Key.slice(0,4));
@@ -382,10 +419,10 @@
 							let minute    = timesplit[1];
 							hour          = parseInt(hour);
 							minute        = parseInt(minute);
-							
+
 							let newdate   = new Date(year, month-1, day, hour, minute);		// date and time grouped
 							let unix      = newdate.getTime();					// unix time stamp
-							
+
 							let whendate    = d.Display.split(" ");				// runtime converted to minutes
 
 							let start_time=new Date(newdate.getTime())
@@ -399,28 +436,32 @@
 							const time    = document.createElement("td");
 							const tix     = document.createElement("td");
 							const when    = document.createElement("td");
-							
+							const duration= document.createElement("td");
+							const pad     = document.createElement("td");
+
 							title.className = 'title';
-							finish.className   = 'run';
+							finish.className= 'finish';
 							info.className  = 'info';
 							date.className  = 'date';
-							time.className  = 'time';
+							time.className  = 'start';
 							tix.className   = 'tix';
 							when.className  = 'when';
-														
+							pad.className  = 'pad';
+							duration.className  = 'duration';
+
 							if ( unix < nowtime ){ tr.className = 'over'; } // already started
 							else
 							if( ( movie_idx==movie.count ) && ( movie.last && ( movie.last.getTime() < nowtime+(3*24*60*60*1000) ) ) ) // no more after 3 days
 							{
 								tr.className = 'leaving';
 							}
-						
+
 							date.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
 							time.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
 							finish.setAttribute("data-sort",String(finish_time.getTime()).padStart(16,"0"));
 							when.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
 							if(hovertxt) { info.setAttribute("title",hovertxt); }
-    
+
 							title.innerHTML+= "<a href='https://"+cinema.toLowerCase()+".thelight.co.uk"+it.Url+"' target='_blank'>"+it.Title+"</a>";
 							finish.innerHTML  += get_time(finish_time) // runtime+"m";
 							info.innerHTML += symbol || "";
@@ -428,21 +469,25 @@
 							time.innerHTML += get_time(start_time);
 							tix.innerHTML  += "<a class='url_tix' href='"+s.Url+"' target='_blank'>BUY</a>";
 							when.innerHTML += whendate[2]+" "+whendate[1]+" ("+s.Display+") "+whendate[0];
-							
+							duration.innerHTML += (runtime);
+							duration.setAttribute("rowspan",4);
+
 							dump.appendChild(tr);
 							tr.appendChild(title);
 							tr.appendChild(info);
 							tr.appendChild(date);
 							tr.appendChild(time);
 							tr.appendChild(finish);
+							tr.appendChild(pad);
+							tr.appendChild(duration);
 //							tr.appendChild(when);
 //							tr.appendChild(tix);
-							
-							
+
+
 					}
 				}
 			}
-			
+
 			for( t in daymap )
 			{
 				let d1=new Date(t*(1000*60*60*24))
@@ -454,37 +499,45 @@
 				const info    = document.createElement("td");
 				const date    = document.createElement("td");
 				const time    = document.createElement("td");
-				
-				tr.className = 'over';
-				
-				title.className = 'title';
-				finish.className   = 'run';
-				info.className  = 'info';
-				date.className  = 'date';
-				time.className  = 'time';
+				const duration= document.createElement("td");
+				const pad     = document.createElement("td");
+
+				tr.className = 'pad';
+
+//				title.className = 'title';
+//				finish.className   = 'run';
+//				info.className  = 'info';
+//				date.className  = 'date';
+//				time.className  = 'time';
+//				pad.className  = 'pad';
+//				duration.className  = 'duration';
 
 				date.setAttribute("data-sort",d2);
 				time.setAttribute("data-sort",d2);
 				finish.setAttribute("data-sort",d2);
 
+				duration.setAttribute("colspan",19);
+
 //				date.innerHTML += get_date(d1);
-				
+
 				dump.appendChild(tr);
 				tr.appendChild(title);
 				tr.appendChild(info);
 				tr.appendChild(date);
 				tr.appendChild(time);
 				tr.appendChild(finish);
+				tr.appendChild(pad);
+				tr.appendChild(duration);
 			}
 
-			
+
 			for (let name in movies)
 			{
 			    let movie = movies[name];
 
 				if ( !movie.first ){ movie.first=new Date(0) }
 				if ( !movie.last  ){ movie.last =new Date(0) }
-			    
+
 			    const tr      = document.createElement("tr");
 			    const title   = document.createElement("td");
 			    const run     = document.createElement("td");
@@ -492,7 +545,7 @@
 			    const last    = document.createElement("td");
 			    const count   = document.createElement("td");
 //			    const url     = document.createElement("td");
-			    
+
 				if( movie.last && ( movie.last.getTime() < nowtime+(3*24*60*60*1000) ) ) // no more after 3 days
 				{
 					tr.className = 'leaving';
@@ -504,7 +557,7 @@
 				let ab  = aa[4].split(":")
 				return aa[1]+' '+aa[2]+' ('+ab[0]+':'+ab[1]+') '+aa[0];
 			    }
-			    
+
 			    title.className  = 'title';
 			    run.className    = 'run';
 			    first.className  = 'first';
@@ -517,12 +570,12 @@
 			    last.innerHTML  += getdate(movie.last);
 			    count.innerHTML += movie.count;
 //			    url.innerHTML   += movie.url;
-			    
+
 				run.setAttribute("data-sort",String(movie.run).padStart(16,"0"));
 				count.setAttribute("data-sort",String(movie.count).padStart(16,"0"));
 				first.setAttribute("data-sort",String(movie.first.getTime()).padStart(16,"0"));
 				last.setAttribute("data-sort",String(movie.last.getTime()).padStart(16,"0"));
-			    
+
 			    list.appendChild(tr);
 			    tr.appendChild(title);
 			    tr.appendChild(run);
@@ -530,12 +583,30 @@
 			    tr.appendChild(last);
 			    tr.appendChild(count);
 //			    tr.appendChild(url);
-			    
+
 			}
 
 // tell tables to sort
 			new Tablesort(document.getElementById("table_list"));
 			new Tablesort(document.getElementById("table_summary"));
+
+
+			let row_to_time  =function(r) { return  Number( r.children[3].getAttribute("data-sort") ) }
+			let row_to_finish=function(r) { return  Number( r.children[4].getAttribute("data-sort") ) }
+			let row_to_length=function(r) { return  Number( r.children[6].innerText ) }
+			for( let i=0 ; i<dump.children.length ; i++ )
+			{
+				let e=dump.children[i]
+				let span=0;
+				let tf=row_to_finish(e)
+				for( let j=i ; j<dump.children.length ; j++ )
+				{
+					let n=dump.children[j]
+					if( tf >= row_to_time(n) ) { span++ } else { break }
+				}
+				e.children[6].setAttribute("rowspan",span)
+//				console.log( row_to_time(e) , row_to_finish(e) , row_to_length(e) )
+			}
 
 		}
 
