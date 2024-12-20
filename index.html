@@ -70,7 +70,7 @@
 			.c-aut		{color:#a403ff; font-weight:bold; letter-spacing:2px; font-variant:all-small-caps;}
 
 			/*	Tablesort style	*/
-			table		{background:#fff; max-width:100%; border-spacing:0; width:100%; margin:10px 0; border:1px solid #ddd; border-collapse:separate;
+			table		{background:#eee; max-width:100%; border-spacing:0; width:100%; margin:10px 0; border:1px solid #ddd; border-collapse:separate;
 			*border-collapse:collapsed; -webkit-box-shadow:0 0 4px rgba(0,0,0,0.10); -moz-box-shadow:0 0 4px rgba(0,0,0,0.10); box-shadow:0 0 4px rgba(0,0,0,0.10);}
 			table th,
 			table td	{padding:6px; line-height:18px; text-align:left; border-top:1px solid #ddd;}
@@ -93,26 +93,28 @@
 			table tbody:first-child tr:first-child td	{border-top:0;}
 			table td:first-child			{font-size:14px;}
 
-			th[role=columnheader]:not(.no-sort)		{cursor:pointer;}
+			th[role=columnheader]:not(.no-sort)			{cursor:pointer;}
 			th[role=columnheader]:not(.no-sort):after	{content:''; float:right; margin-top:7px; border-width:0 4px 4px; border-style:solid; border-color:#404040 transparent; visibility:hidden; opacity:0; -ms-user-select:none; -webkit-user-select:none; -moz-user-select:none; user-select:none;}
 			th[aria-sort=ascending]:not(.no-sort):after	{border-bottom:none; border-width:4px 4px 0;}
-			th[aria-sort]:not(.no-sort):after		{visibility:visible; opacity:0.4;}
+			th[aria-sort]:not(.no-sort):after			{visibility:visible; opacity:0.4;}
 			th[role=columnheader]:not(.no-sort):hover:after	{visibility:visible; opacity:1;}
+			
+			th.start_head[role=columnheader]:after,
+			th.finish_head[role=columnheader]:after	{content:''; border:0; margin:0;}
 
-			table { background: #eee; }
 			table td.duration {
 				border:0px solid #999; width:16px; border-width: 0px 2px 2px 0px;
 				word-break: break-all;vertical-align: text-top; border-top: 2px solid #fff; }
 			table th.pad { width:2px; }
 			table td.pad { width:2px; }
+			
+			table#table_summary	{background-color:#fff;}
 
 /*
 			table td.count { background: #eee; }
 */
 			table td.pad , table td.finish , table td.start
 			{ border: 0px; width:2px; border-top: 0px; border-bottom:2px solid #999; border-top: 2px solid #fff; }
-
-			table tr.pad td { border 0px; }
 
 			#table_list tr {background: #eee;}
 			#table_list tr:nth-child(12n+1)  {background: #f441;}
@@ -132,7 +134,7 @@
 			#table_list tr td:nth-child(1),
 			#table_list tr td:nth-child(2),
 			#table_list tr td:nth-child(3)
-				{ background: #eee !important; }
+				{ background: #fff; }
 
 			#table_list tr.over,
 			#table_list tr.over td:nth-child(1),
@@ -145,6 +147,9 @@
 			#table_list tr.leaving td:nth-child(2),
 			#table_list tr.leaving td:nth-child(3)
 				{ background: #fcc !important;}
+				
+			table tr.pad td { background: #eee !important; border 0px; }
+						
 
 			/*	PHONES & STUFF
 				============================================= */
@@ -190,11 +195,11 @@
 				<thead>
 				<tr>
 					<th class="title_head">Title</th>
-					<th>Info</th>
-					<th data-sort-default >date</th>
-					<th>start</th>
-					<th>finish</th>
-					<th colspan="20">duration</th>
+					<th class="info_head">Info</th>
+					<th data-sort-default >Date</th>
+					<th class="start_head">Start</th>
+					<th class="finish_head">Finish</th>
+					<th colspan="20">Duration</th>
 				</tr>
 				</thead>
 				<tbody id="dump"></tbody>
