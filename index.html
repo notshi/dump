@@ -92,8 +92,6 @@
 			table tbody:first-child tr:first-child th,
 			table tbody:first-child tr:first-child td	{border-top:0;}
 			table td:first-child			{font-size:14px;}
-			table tr.over					{background-color:#f1f1f1; color:#afaeae;}
-			table tr.leaving				{background-color:#fee; }
 
 			th[role=columnheader]:not(.no-sort)		{cursor:pointer;}
 			th[role=columnheader]:not(.no-sort):after	{content:''; float:right; margin-top:7px; border-width:0 4px 4px; border-style:solid; border-color:#404040 transparent; visibility:hidden; opacity:0; -ms-user-select:none; -webkit-user-select:none; -moz-user-select:none; user-select:none;}
@@ -116,27 +114,37 @@
 
 			table tr.pad td { border 0px; }
 
-/*
-			table tr {background: #eee;}
-			#table_summary td,
-			table tr td:nth-child(1),
-			table tr td:nth-child(2),
-			table tr td:nth-child(3) {background: #eee;}
+			#table_list tr {background: #eee;}
+			#table_list tr:nth-child(12n+1)  {background: #f441;}
+			#table_list tr:nth-child(12n+2)  {background: #ff01;}
+			#table_list tr:nth-child(12n+3)  {background: #0f01;}
+			#table_list tr:nth-child(12n+4)  {background: #0ff1;}
+			#table_list tr:nth-child(12n+5)  {background: #44f1;}
+			#table_list tr:nth-child(12n+6)  {background: #f0f1;}
+			#table_list tr:nth-child(12n+7)  {background: #f442;}
+			#table_list tr:nth-child(12n+8)  {background: #ff02;}
+			#table_list tr:nth-child(12n+9)  {background: #0f02;}
+			#table_list tr:nth-child(12n+10) {background: #0ff2;}
+			#table_list tr:nth-child(12n+11) {background: #44f2;}
+			#table_list tr:nth-child(12n+12) {background: #f0f2;}
 
-			table tr:nth-child(12n+1)  {background: #f441;}
-			table tr:nth-child(12n+2)  {background: #ff01;}
-			table tr:nth-child(12n+3)  {background: #0f01;}
-			table tr:nth-child(12n+4)  {background: #0ff1;}
-			table tr:nth-child(12n+5)  {background: #44f1;}
-			table tr:nth-child(12n+6)  {background: #f0f1;}
-			table tr:nth-child(12n+7)  {background: #f442;}
-			table tr:nth-child(12n+8)  {background: #ff02;}
-			table tr:nth-child(12n+9)  {background: #0f02;}
-			table tr:nth-child(12n+10) {background: #0ff2;}
-			table tr:nth-child(12n+11) {background: #44f2;}
-			table tr:nth-child(12n+12) {background: #f0f2;}
-*/
 
+			#table_list tr td:nth-child(1),
+			#table_list tr td:nth-child(2),
+			#table_list tr td:nth-child(3)
+				{ background: #eee !important; }
+
+			#table_list tr.over,
+			#table_list tr.over td:nth-child(1),
+			#table_list tr.over td:nth-child(2),
+			#table_list tr.over td:nth-child(3)
+				{ background: #ddd !important;  color:#bbb !important; }
+
+			#table_list tr.leaving,
+			#table_list tr.leaving td:nth-child(1),
+			#table_list tr.leaving td:nth-child(2),
+			#table_list tr.leaving td:nth-child(3)
+				{ background: #fcc !important;}
 
 			/*	PHONES & STUFF
 				============================================= */
