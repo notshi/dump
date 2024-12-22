@@ -98,23 +98,25 @@
 			th[aria-sort=ascending]:not(.no-sort):after	{border-bottom:none; border-width:4px 4px 0;}
 			th[aria-sort]:not(.no-sort):after			{visibility:visible; opacity:0.4;}
 			th[role=columnheader]:not(.no-sort):hover:after	{visibility:visible; opacity:1;}
-			
+
 			th.start_head[role=columnheader]:after,
 			th.finish_head[role=columnheader]:after	{content:''; border:0; margin:0;}
 
-			table td.duration {
-				border:0px solid #999; width:16px; border-width: 0px 2px 2px 0px;
-				word-break: break-all;vertical-align: text-top; border-top: 2px solid #fff; }
 			table th.pad { width:2px; }
 			table td.pad { width:2px; }
-			
+
 			table#table_summary	{background-color:#fff;}
+
+			table td.duration {
+				border:0px solid #eee; width:16px;
+				word-break: break-all;vertical-align: text-top; border-top: 2px solid #fff; }
+
+			table td.pad , table td.finish , table td.start
+			{ border: 0px solid #eee; width:2px; border-top: 2px solid #fff; }
 
 /*
 			table td.count { background: #eee; }
 */
-			table td.pad , table td.finish , table td.start
-			{ border: 0px; width:2px; border-top: 0px; border-bottom:2px solid #999; border-top: 2px solid #fff; }
 
 			#table_list tr {background: #eee;}
 			#table_list tr:nth-child(12n+1)  {background: #f441;}
@@ -147,9 +149,9 @@
 			#table_list tr.leaving td:nth-child(2),
 			#table_list tr.leaving td:nth-child(3)
 				{ background: #fcc !important;}
-				
+
 			table tr.pad td { background: #eee !important; border 0px; }
-						
+
 
 			/*	PHONES & STUFF
 				============================================= */
