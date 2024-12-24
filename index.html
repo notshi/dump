@@ -150,6 +150,18 @@
 			#table_list tr.leaving td:nth-child(3)
 				{ background: #fcc !important;}
 
+			#table_list tr.nobox,
+			#table_list tr.nobox td:nth-child(1),
+			#table_list tr.nobox td:nth-child(2),
+			#table_list tr.nobox td:nth-child(3)
+				{ background: #ddd !important;  color:#bbb !important; }
+
+			#table_list tr.box,
+			#table_list tr.box td:nth-child(1),
+			#table_list tr.box td:nth-child(2),
+			#table_list tr.box td:nth-child(3)
+				{ background: #cfc !important;}
+
 			table tr.pad td { background: #eee !important; border 0px; }
 
 
@@ -297,6 +309,76 @@
 				"18 Certificate":"18",
 			}
 
+
+			let row_to_time  =function(r) { return  Number( r.children[3].getAttribute("data-sort") ) }
+			let row_to_finish=function(r) { return  Number( r.children[4].getAttribute("data-sort") ) }
+			let row_to_box   =function(r) { return  r.children[5].children[0] }
+			let row_to_length=function(r) { return  Number( r.children[6].innerText ) }
+
+			let box_click=function(e)
+			{
+				//console.log(e)
+
+				let checked=[]
+				for( let i=0 ; i<dump.children.length ; i++ ) // find all checked
+				{
+					let r=dump.children[i]
+					let b=row_to_box(r)
+					if(b)
+					{
+						if(b.checked)
+						{
+							checked.push(r)
+							r.classList.add('box')
+						}
+						else
+						{
+							r.classList.remove('box')
+						}
+					}
+				}
+				//console.log(checked)
+				for( let i=0 ; i<dump.children.length ; i++ ) // adjust all non checked
+				{
+					let r=dump.children[i]
+					let b=row_to_box(r)
+					if(b)
+					{
+						if(!b.checked)
+						{
+							let rt=row_to_time(r)
+							let rf=row_to_finish(r)
+							let rb=row_to_box(r)
+							let overlap=false
+							for(let c of checked)
+							{
+								let ct=row_to_time(c)
+								let cf=row_to_finish(c)
+//								344 377 530 602
+//							console.log(rt,rf,ct,cf,( (rt>=ct) && (rt<cf) ) , ( (rf>=ct) && (rf<cf) ))
+								if( ( (rt<cf) && (rf>=ct) )  )
+								{
+									overlap=true
+								}
+							}
+							if(overlap)
+							{
+								rb.disabled=true
+								r.classList.add('nobox')
+							}
+							else
+							{
+								rb.disabled=false
+								r.classList.remove('nobox')
+							}
+						}
+					}
+				}
+
+//						console.log(b.id,b.checked,b.disabled)
+
+			}
+
 			for (let it of dat.Schedule)
 			{
 				if(!it.Dates) { continue }
@@ -357,6 +439,7 @@
 
 //				console.log(it.Title)
 //				console.log(it)
+
 				for (let d of it.Dates || [] )
 				{
 //					console.log(d.Display)
@@ -443,6 +526,12 @@
 							let start_time=new Date(newdate.getTime())
 							let finish_time=new Date(newdate.getTime()+((runtime+20)*60*1000))
 
+							let id= it.Url+"/"+
+								("0"+(start_time.getMonth()+1)).slice(-2)+
+								("0"+start_time.getDate()).slice(-2)+
+								("0"+start_time.getHours()).slice(-2)+
+								("0"+start_time.getMinutes()).slice(-2)
+
 							const tr      = document.createElement("tr");
 							const title   = document.createElement("td");
 							const finish  = document.createElement("td");
@@ -470,6 +559,7 @@
 							{
 								tr.className = 'leaving';
 							}
+							tr.setAttribute("id",id);
 
 							date.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
 							time.setAttribute("data-sort",String(start_time.getTime()).padStart(16,"0"));
@@ -486,6 +576,9 @@
 							when.innerHTML += whendate[2]+" "+whendate[1]+" ("+s.Display+") "+whendate[0];
 							duration.innerHTML += (runtime);
 							duration.setAttribute("rowspan",4);
+							pad.innerHTML += '<input type="checkbox" id="box'+id+'" name="cb'+id+'"/>'
+							pad.children[0].addEventListener('click', box_click );
+
 
 							dump.appendChild(tr);
 							tr.appendChild(title);
@@ -606,9 +699,6 @@
 			new Tablesort(document.getElementById("table_summary"));
 
 
-			let row_to_time  =function(r) { return  Number( r.children[3].getAttribute("data-sort") ) }
-			let row_to_finish=function(r) { return  Number( r.children[4].getAttribute("data-sort") ) }
-			let row_to_length=function(r) { return  Number( r.children[6].innerText ) }
 			for( let i=0 ; i<dump.children.length ; i++ )
 			{
 				let e=dump.children[i]
