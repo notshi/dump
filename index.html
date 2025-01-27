@@ -399,6 +399,8 @@
 					runminute   = parseInt(ss[0]);
 				}
 				let runtime     = runhour*60 + runminute;
+				if(!runtime){runtime=0}
+
 
 				for (let d of it.Dates || [] )
 				{
